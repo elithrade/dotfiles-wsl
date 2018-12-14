@@ -22,7 +22,7 @@ alias l="ls -o -hX --group-directories-first"
 alias la="ls -o -AhX --group-directories-first"
 alias v="nvim"
 alias zh="nvim ~/.zsh_history"
-alias dot="cd ~/dotfiles"
+alias dot="cd ~/dotfiles-wsl"
 
 # Npm
 alias ni="npm install"
