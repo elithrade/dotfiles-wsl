@@ -54,10 +54,6 @@
     stdin: true
     stdout: true
   -
-    command: chmod -R 755 ~/.antigen/bundles
-    stdin: true
-    stdout: true
-  -
     command: sudo apt-get install --reinstall make
     stdin: true
     stdout: true
