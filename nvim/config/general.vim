@@ -13,7 +13,7 @@ endtry
 
 " Map the leader key to space
 let mapleader="\<SPACE>"
-" Map the local leader tp \
+" Map the local leader to \
 let maplocalleader = "\\"
 
 set number
@@ -91,19 +91,14 @@ inoremap <C-v> <Esc>"+p
 nnoremap n nzz
 nnoremap coh :nohl<CR>
 nnoremap J mzJ`z
+" Quickly replace the current word under cursor with what's in register 0
+nnoremap <C-j> cw<C-r>0<Esc>
 nnoremap <silent> <Tab> :wincmd w<CR>
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
 nnoremap n nzzzv
 nnoremap N Nzzzv
-
-" Use Use <c-6>/<c-^> [b to go back to the previous buffer
-" % - Create a new file
-" d - Create a new directory
-" D - Delete the file/directory under the cursor (or marked files/dirs)
-" R - Rename/move file/directory
-nnoremap - :Ntree<CR>
 
 " Horizontal split
 nmap <Leader>- :sp<CR>
@@ -115,6 +110,8 @@ nmap <Leader>c :close<CR>
 " Close quickfix
 nmap <Leader>a :cclose<CR>
 nmap <Leader>n :noh<CR>
+" Close buffer
+nmap <Leader>b :bdelete<CR>
 
 " Allow saving of files as sudo when I forgot to start vim using sudo
 cmap sw w !sudo tee > /dev/null %

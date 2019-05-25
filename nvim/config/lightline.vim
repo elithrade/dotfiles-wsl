@@ -3,42 +3,48 @@ set laststatus=2
 set noshowmode
 
 let g:lightline = {
-  \ 'colorscheme': 'one',
-  \ 'active': {
-  \   'left': [ [ 'mode', 'paste' ], [ 'filename', 'readonly', 'modified' ] ]
-  \ },
-  \ 'component_function': {
-  \   'filename': 'LightlineFilename',
-  \   'readonly': 'LightlineReadonly',
-  \   'modified': 'LightlineModified',
-  \ }
-  \ }
+    \ 'colorscheme': 'one',
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'fugitive', 'cocstatus', 'readonly', 'relativepath', 'modified' ] ]
+    \ },
+    \ 'component': {
+    \   'lineinfo': ' %3l:%-2v',
+    \ },
+    \ 'component_function': {
+    \   'fugitive': 'LightlineFugitive',
+    \   'readonly': 'LightlineReadonly',
+    \   'modified': 'LightlineModified',
+    \   'cocstatus': 'coc#status'
+    \ },
+    \ }
 
-  let g:lightline.mode_map = {
-  \ 'n' : 'N',
-  \ 'i' : 'I',
-  \ 'R' : 'R',
-  \ 'v' : 'V',
-  \ 'V' : 'V-LINE',
-  \ "\<C-v>": 'V-BLOCK',
-  \ 'c' : 'COMMAND',
-  \ 's' : 'SELECT',
-  \ 'S' : 'S-LINE',
-  \ "\<C-s>": 'S-BLOCK',
-  \ 't': 'TERMINAL',
-  \ }
+let g:lightline.mode_map = {
+    \ 'n' : 'N',
+    \ 'i' : 'I',
+    \ 'R' : 'REPLACE',
+    \ 'v' : 'V',
+    \ 'V' : 'V-LINE',
+    \ "\<C-v>": 'V-BLOCK',
+    \ 'c' : 'COMMAND',
+    \ 's' : 'SELECT',
+    \ 'S' : 'S-LINE',
+    \ "\<C-s>": 'S-BLOCK',
+    \ 't': 'TERMINAL',
+    \ }
 
-function! LightlineFilename()
-  return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
-        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \  &ft == 'unite' ? unite#get_status_string() :
-        \ '' != expand('%:t') ? expand('%:t') : '') .
-        \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+function! LightlineFugitive()
+  if exists('*fugitive#head')
+    let branch = fugitive#head()
+    return branch !=# '' ? ' '.branch : ''
+  endif
+return ''
+
 endfunction
-
 function! LightlineReadonly()
-  return &ft !~? 'help' && &readonly ? '' : ''
+  return &readonly ? '' : ''
 endfunction
+
 function! LightlineModified()
   return &modifiable && &modified ? '+' : ''
 endfunction
